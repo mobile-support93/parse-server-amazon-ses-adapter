@@ -33,13 +33,13 @@ module.exports = function (options) {
 
     var sendVerificationEmail = function (params) {                        
         return new Promise(function (resolve, reject) {
-         var mailBody=   '<span style="text-align: center;"><img src="'+bannerImage+'" alt="' +params.appName+' Logo" style="height: 200px"></span>'+
+         var mailBody=   '<div style="width: 100%; text-align: center;"><img src="'+bannerImage+'" alt="' +params.appName+' Logo" style="height: 200px"></div>'+
 '<br />'+
 '<p>Hi,</p>'+
 
 '<p>Thank you for creating an account! <br />'+
 
-'Please click <a href="'+params.link+'">HERE</a> to confirm the use of this email address with '+params.appName+'.</p>'+
+'Please click <a href="'+params.link+'">HERE</a> to confirm the use of the email address '+params.user.attributes.email+' with '+params.appName+'.</p>'+
 
 'Thanks,<br />'+
 
@@ -47,8 +47,8 @@ params.appName+' Support';
 
             ses.send({
                 from: options.from,
-                to: [params.to],
-                subject: "",
+                to: [params.user.attributes.email],
+                subject: "Please verify your e-mail for "+params.appName,
                 body: {
                     html: mailBody,
                 }
